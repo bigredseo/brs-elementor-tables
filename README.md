@@ -1,109 +1,76 @@
 # BRS Elementor Tables
 
-A responsive table widget for Elementor by [Big Red SEO](https://www.bigredseo.com/).
+An Elementor widget for building accessible, responsive HTML tables with standard Elementor sidebar controls. Developed by [Big Red SEO](https://www.bigredseo.com/).
 
 ## Requirements
 
-- WordPress 6.5 or newer
-- PHP 8.3 or newer
-- Elementor active (the widget relies on Elementor's widget, controls, and editor APIs)
-- JavaScript enabled in the Elementor editor
+- WordPress 6.5+
+- PHP 8.3+
+- Elementor plugin activated
 
 ## Installation
 
-1. In WordPress, go to **Plugins → Add New Plugin → Upload Plugin**.
-2. Upload `brs-elementor-tables-1.0.0.zip` and activate it.
-3. Edit a page with Elementor, find **BRS Table** under General, and add it to the canvas.
-4. Edit the table using the widget's **Content → Table Content** section.
+Upload the `brs-elementor-tables-1.0.0.zip` release archive in **Plugins → Add New → Upload Plugin**, then activate. Open an Elementor page and locate the **BRS Table** widget under General.
 
-## Editing tables
+## Using the editor
 
-### Header Row
+### Content → Table Setup
 
-- Starts with **Column 1** and **Column 2**.
-- Edit the text in each header field.
-- **Add Column** adds a heading and a matching empty cell to every existing body row.
-- Move a column left using the arrow; body cells move with their column.
-- Delete a column (at least one column is required). Deleting a column also deletes its associated cell data in every row.
-- Maximum **12 columns**.
+Select **Number of Columns** (1–6; defaults to 3). This restored release intentionally uses the approved 1.7.0 column-count workflow, **not** the experimental Add Column editor introduced in 1.8.0. Reducing the count hides unused fields without deleting their saved values.
 
-### Table Rows
+Additional controls:
 
-- Starts with two rows; body cell defaults are **Item 1** and **Item 2**.
-- Each **Row 1**, **Row 2**, etc. section expands to show one text input per active column.
-- **Add Row** creates one blank cell per active column.
-- Move a row up/down, duplicate a row, or delete it.
-- Maximum **250 body rows**.
-- The table data control is custom; saved edits and preview behavior should be tested in your Elementor installation before production use.
+- **Table Caption (optional)** — visible table caption.
+- **First column is a row heading** — outputs `<th scope="row">` for the first cell in each body row.
+- **Small Screens** — horizontal scrolling (default), or allow content wrapping within the table.
 
-### Other content options
+### Content → Header Row
 
-- **Table Caption**: Optional visible caption above the table.
-- **First column is row heading**: Outputs `<th scope="row">` rather than `<td>` for the first cell of each body row.
-- Cell values are plain text (HTML markup is escaped).
+Edit **Column 1**, **Column 2**, etc. Only fields for the selected number of columns appear. Their default text is the corresponding column name.
+
+### Content → Table Rows
+
+Each body row is an Elementor repeater item: expand to edit its cells, reorder by dragging, duplicate or delete using Elementor's repeater controls, and use **Add Row** to insert rows. The first two rows default to **Row 1** and **Row 2**; these are editor-only names. Individual inputs are labeled **Item 1**, **Item 2**, etc. and start blank. The included panel-only script hides unused cell fields according to the current column count. Output is limited to 250 body rows.
 
 ## Styling
 
-### Style → Column Widths
+### Style → Layout & Columns
 
-- Up to 12 responsive percentage controls, **Column 1 (%)** through **Column 12 (%)**. Only fields corresponding to active columns appear in the editor.
-- Use Elementor's device icon for desktop, tablet, and mobile settings.
-- For two columns, enter `25` and `75`, or `50` and `50`.
-- Leave fields empty for automatic table layout. When explicitly assigning widths, use values totaling 100% for that device.
-- Column widths are table-column percentages, **not independent 100%-width stacked cards**. Use the stacked layout option below for full-width mobile cells.
+Choose fixed widths for each currently active column, in percentages. For two columns, enter `25` and `75`, or `50` and `50`. **Every active column must have a positive width and the total must equal 100%**; otherwise the table uses automatic widths. These width settings are **not** device-specific in this restored version.
 
-### Style → Responsive Layout
-
-- **Tablet Display**: horizontal scrolling (default) or vertically stacked cells.
-- **Mobile Display**: vertically stacked cells (default) or horizontal scrolling.
-- In stacked mode the column heading is displayed as a label for its corresponding body cell and each cell occupies the full available row width.
-- Default CSS thresholds: **1024px** for tablet and **767px** for mobile; these are fixed CSS media queries and do not automatically follow custom Elementor breakpoints.
-- **Cell Padding** is responsive with px, em, and rem units.
-
-### Style → Appearance
+### Style → Table Appearance
 
 - Header background and text colors
 - Body text color
-- Alternating row background
+- Alternating row background color
 - Border color
-- Responsive text alignment
-- Separate header and body typography controls
+- Responsive cell padding (px, em, rem)
+- Cell text alignment
+- Separate header/body typography
 
-## Front-end output and accessibility
+### Small-screen presentation
 
-Outputs a semantic HTML `<table>` with `<thead>`, `<tbody>`, column heading scopes and an optional `<caption>`. The container is keyboard-focusable to support horizontal overflow, with an accessible region label. In stacked mode the visual header row is hidden and body cells display header-derived labels. Verify reading order and responsive presentation with your site's accessibility requirements.
+The Content setting **Small Screens** controls horizontal overflow or wrapping. The restored 1.7.0 implementation **does not** include stacked mobile cards or independent desktop/tablet/mobile column widths. These were introduced in the later, unapproved custom-editor implementation and have not been retained.
 
-## Plugin management and updates
+## Front-end output
 
-The installed plugin includes the shared BRS GitHub updater, helper bootloader, and an admin changelog viewer. The **Changelog** link appears under the plugin on the WordPress Plugins screen. The **View details** modal uses GitHub README information when available and otherwise local `README.md`; release notes fall back to local `CHANGELOG.md`. Updates require a **public** GitHub repository and a published release containing the exact asset `brs-elementor-tables-{version}.zip`.
+The widget renders an HTML `<table>` inside a scrollable/wrapping container with `<thead>`, `<tbody>`, column heading scopes, optional row heading scopes, and an optional `<caption>`. Cell content is escaped as plain text. The container is keyboard focusable to assist navigating scrollable tables.
 
-Source repository: https://github.com/bigredseo/brs-elementor-tables
+## Plugin management
 
-## Development
-This repository contains the source code for the `brs-elementor-tables` WordPress
-plugin.
+The standard BRS helper classes provide a **Changelog** link in WordPress's Installed Plugins screen, a plugin details modal, and GitHub-based updates for a **public** GitHub repository with a published versioned ZIP release. The `Update URI` points to `https://github.com/bigredseo/brs-elementor-tables`.
 
-Development dependencies are installed with Composer:
+## Development and GitHub release
 
-```powershell
-composer install
-```
+Development dependencies are declared in Composer; `composer install` restores the local `vendor` directory. `vendor`, `stubs`, tests, and development configuration are excluded by `.github/workflows/release-plugin.yml` from the WordPress installation ZIP.
 
-The `vendor` directory is development-only. It is not committed and is excluded
-from the release ZIP.
+1. Commit source files to the `main` branch.
+2. Verify the plugin `Version` header and `BRS_ELEMENTOR_TABLES_VERSION` constant match, and update `CHANGELOG.md`.
+3. Run **Actions → Release BRS Elementor Tables → Run workflow**.
+4. Confirm GitHub creates tag `v1.0.0` with asset `brs-elementor-tables-1.0.0.zip`.
 
-Release packaging is handled by `.github/workflows/release-plugin.yml`. Tag a
-release as `X.Y.Z` and the workflow builds `brs-elementor-tables-X.Y.Z.zip`.
-
-## Release workflow
-
-1. Update the plugin `Version` header and `BRS_ELEMENTOR_TABLES_VERSION` constant to the same version.
-2. Update `CHANGELOG.md` with a matching `## X.Y.Z - YYYY-MM-DD - Title` heading.
-3. Commit to `main`, then run **Actions → Release BRS Elementor Tables → Run workflow**.
-4. Verify that the workflow published tag `vX.Y.Z` and the release ZIP `brs-elementor-tables-X.Y.Z.zip`.
-
-The workflow automatically creates the tag and GitHub release; do not create the tag manually beforehand.
+**Release QA:** PHP/JS syntax checks are not a substitute for testing widget editing, save/reopen, and responsive presentation in a real Elementor installation.
 
 ## License
 
-GPL-2.0-or-later. Copyright 2026 Big Red SEO.
+GPL-2.0-or-later (consistent with standard BRS helper headers).

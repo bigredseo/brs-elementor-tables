@@ -1,142 +1,17 @@
-.brs-structure-editor{display:grid;gap:10px}
-.brs-structure-editor .brs-editor-section{border:1px solid #d5d8dc;border-radius:4px;overflow:hidden}
-.brs-structure-editor summary{cursor:pointer;padding:10px;background:#f7f8fa;font-weight:600;list-style:none}
-.brs-structure-editor summary::before{content:'▸';margin-right:7px}
-.brs-structure-editor details[open]>summary::before{content:'▾'}
-.brs-structure-editor .brs-editor-fields{padding:10px;display:grid;gap:8px}
-.brs-structure-editor label{display:block;font-size:11px;margin-bottom:3px}
-.brs-structure-editor input{width:100%;min-width:0}
-.brs-structure-editor .brs-editor-field{display:flex;align-items:center;gap:5px}
-.brs-structure-editor .brs-editor-field>div{flex:1;min-width:0}
-.brs-structure-editor button{cursor:pointer;border:1px solid #c4c6ca;border-radius:3px;padding:5px 8px;background:white}
-.brs-structure-editor button:focus-visible{outline:2px solid #6976d8}
-.brs-structure-editor .brs-editor-actions{display:flex;gap:5px;justify-content:flex-end}
-.brs-structure-editor .brs-add{width:100%;padding:9px}
-
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_2,#elementor-panel.brs-column-count-1 .elementor-control-col_width_2_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_2_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_3,#elementor-panel.brs-column-count-1 .elementor-control-col_width_3_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_3_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_4,#elementor-panel.brs-column-count-1 .elementor-control-col_width_4_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_4_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_5,#elementor-panel.brs-column-count-1 .elementor-control-col_width_5_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_5_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_6,#elementor-panel.brs-column-count-1 .elementor-control-col_width_6_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_6_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_7,#elementor-panel.brs-column-count-1 .elementor-control-col_width_7_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_7_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_8,#elementor-panel.brs-column-count-1 .elementor-control-col_width_8_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_8_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_9,#elementor-panel.brs-column-count-1 .elementor-control-col_width_9_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_9_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_10,#elementor-panel.brs-column-count-1 .elementor-control-col_width_10_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_10_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_11,#elementor-panel.brs-column-count-1 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-1 .elementor-control-col_width_12,#elementor-panel.brs-column-count-1 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-1 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_3,#elementor-panel.brs-column-count-2 .elementor-control-col_width_3_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_3_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_4,#elementor-panel.brs-column-count-2 .elementor-control-col_width_4_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_4_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_5,#elementor-panel.brs-column-count-2 .elementor-control-col_width_5_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_5_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_6,#elementor-panel.brs-column-count-2 .elementor-control-col_width_6_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_6_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_7,#elementor-panel.brs-column-count-2 .elementor-control-col_width_7_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_7_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_8,#elementor-panel.brs-column-count-2 .elementor-control-col_width_8_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_8_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_9,#elementor-panel.brs-column-count-2 .elementor-control-col_width_9_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_9_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_10,#elementor-panel.brs-column-count-2 .elementor-control-col_width_10_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_10_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_11,#elementor-panel.brs-column-count-2 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-2 .elementor-control-col_width_12,#elementor-panel.brs-column-count-2 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-2 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-3 .elementor-control-col_width_4,#elementor-panel.brs-column-count-3 .elementor-control-col_width_4_tablet,#elementor-panel.brs-column-count-3 .elementor-control-col_width_4_mobile{display:none!important}
-#elementor-panel.brs-column-count-3 .elementor-control-col_width_5,#elementor-panel.brs-column-count-3 .elementor-control-col_width_5_tablet,#elementor-panel.brs-column-count-3 .elementor-control-col_width_5_mobile{display:none!important}
-#elementor-panel.brs-column-count-3 .elementor-control-col_width_6,#elementor-panel.brs-column-count-3 .elementor-control-col_width_6_tablet,#elementor-panel.brs-column-count-3 .elementor-control-col_width_6_mobile{display:none!important}
-#elementor-panel.brs-column-count-3 .elementor-control-col_width_7,#elementor-panel.brs-column-count-3 .elementor-control-col_width_7_tablet,#elementor-panel.brs-column-count-3 .elementor-control-col_width_7_mobile{display:none!important}
-#elementor-panel.brs-column-count-3 .elementor-control-col_width_8,#elementor-panel.brs-column-count-3 .elementor-control-col_width_8_tablet,#elementor-panel.brs-column-count-3 .elementor-control-col_width_8_mobile{display:none!important}
-#elementor-panel.brs-column-count-3 .elementor-control-col_width_9,#elementor-panel.brs-column-count-3 .elementor-control-col_width_9_tablet,#elementor-panel.brs-column-count-3 .elementor-control-col_width_9_mobile{display:none!important}
-#elementor-panel.brs-column-count-3 .elementor-control-col_width_10,#elementor-panel.brs-column-count-3 .elementor-control-col_width_10_tablet,#elementor-panel.brs-column-count-3 .elementor-control-col_width_10_mobile{display:none!important}
-#elementor-panel.brs-column-count-3 .elementor-control-col_width_11,#elementor-panel.brs-column-count-3 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-3 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-3 .elementor-control-col_width_12,#elementor-panel.brs-column-count-3 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-3 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-4 .elementor-control-col_width_5,#elementor-panel.brs-column-count-4 .elementor-control-col_width_5_tablet,#elementor-panel.brs-column-count-4 .elementor-control-col_width_5_mobile{display:none!important}
-#elementor-panel.brs-column-count-4 .elementor-control-col_width_6,#elementor-panel.brs-column-count-4 .elementor-control-col_width_6_tablet,#elementor-panel.brs-column-count-4 .elementor-control-col_width_6_mobile{display:none!important}
-#elementor-panel.brs-column-count-4 .elementor-control-col_width_7,#elementor-panel.brs-column-count-4 .elementor-control-col_width_7_tablet,#elementor-panel.brs-column-count-4 .elementor-control-col_width_7_mobile{display:none!important}
-#elementor-panel.brs-column-count-4 .elementor-control-col_width_8,#elementor-panel.brs-column-count-4 .elementor-control-col_width_8_tablet,#elementor-panel.brs-column-count-4 .elementor-control-col_width_8_mobile{display:none!important}
-#elementor-panel.brs-column-count-4 .elementor-control-col_width_9,#elementor-panel.brs-column-count-4 .elementor-control-col_width_9_tablet,#elementor-panel.brs-column-count-4 .elementor-control-col_width_9_mobile{display:none!important}
-#elementor-panel.brs-column-count-4 .elementor-control-col_width_10,#elementor-panel.brs-column-count-4 .elementor-control-col_width_10_tablet,#elementor-panel.brs-column-count-4 .elementor-control-col_width_10_mobile{display:none!important}
-#elementor-panel.brs-column-count-4 .elementor-control-col_width_11,#elementor-panel.brs-column-count-4 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-4 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-4 .elementor-control-col_width_12,#elementor-panel.brs-column-count-4 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-4 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-5 .elementor-control-col_width_6,#elementor-panel.brs-column-count-5 .elementor-control-col_width_6_tablet,#elementor-panel.brs-column-count-5 .elementor-control-col_width_6_mobile{display:none!important}
-#elementor-panel.brs-column-count-5 .elementor-control-col_width_7,#elementor-panel.brs-column-count-5 .elementor-control-col_width_7_tablet,#elementor-panel.brs-column-count-5 .elementor-control-col_width_7_mobile{display:none!important}
-#elementor-panel.brs-column-count-5 .elementor-control-col_width_8,#elementor-panel.brs-column-count-5 .elementor-control-col_width_8_tablet,#elementor-panel.brs-column-count-5 .elementor-control-col_width_8_mobile{display:none!important}
-#elementor-panel.brs-column-count-5 .elementor-control-col_width_9,#elementor-panel.brs-column-count-5 .elementor-control-col_width_9_tablet,#elementor-panel.brs-column-count-5 .elementor-control-col_width_9_mobile{display:none!important}
-#elementor-panel.brs-column-count-5 .elementor-control-col_width_10,#elementor-panel.brs-column-count-5 .elementor-control-col_width_10_tablet,#elementor-panel.brs-column-count-5 .elementor-control-col_width_10_mobile{display:none!important}
-#elementor-panel.brs-column-count-5 .elementor-control-col_width_11,#elementor-panel.brs-column-count-5 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-5 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-5 .elementor-control-col_width_12,#elementor-panel.brs-column-count-5 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-5 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-6 .elementor-control-col_width_7,#elementor-panel.brs-column-count-6 .elementor-control-col_width_7_tablet,#elementor-panel.brs-column-count-6 .elementor-control-col_width_7_mobile{display:none!important}
-#elementor-panel.brs-column-count-6 .elementor-control-col_width_8,#elementor-panel.brs-column-count-6 .elementor-control-col_width_8_tablet,#elementor-panel.brs-column-count-6 .elementor-control-col_width_8_mobile{display:none!important}
-#elementor-panel.brs-column-count-6 .elementor-control-col_width_9,#elementor-panel.brs-column-count-6 .elementor-control-col_width_9_tablet,#elementor-panel.brs-column-count-6 .elementor-control-col_width_9_mobile{display:none!important}
-#elementor-panel.brs-column-count-6 .elementor-control-col_width_10,#elementor-panel.brs-column-count-6 .elementor-control-col_width_10_tablet,#elementor-panel.brs-column-count-6 .elementor-control-col_width_10_mobile{display:none!important}
-#elementor-panel.brs-column-count-6 .elementor-control-col_width_11,#elementor-panel.brs-column-count-6 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-6 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-6 .elementor-control-col_width_12,#elementor-panel.brs-column-count-6 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-6 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-7 .elementor-control-col_width_8,#elementor-panel.brs-column-count-7 .elementor-control-col_width_8_tablet,#elementor-panel.brs-column-count-7 .elementor-control-col_width_8_mobile{display:none!important}
-#elementor-panel.brs-column-count-7 .elementor-control-col_width_9,#elementor-panel.brs-column-count-7 .elementor-control-col_width_9_tablet,#elementor-panel.brs-column-count-7 .elementor-control-col_width_9_mobile{display:none!important}
-#elementor-panel.brs-column-count-7 .elementor-control-col_width_10,#elementor-panel.brs-column-count-7 .elementor-control-col_width_10_tablet,#elementor-panel.brs-column-count-7 .elementor-control-col_width_10_mobile{display:none!important}
-#elementor-panel.brs-column-count-7 .elementor-control-col_width_11,#elementor-panel.brs-column-count-7 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-7 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-7 .elementor-control-col_width_12,#elementor-panel.brs-column-count-7 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-7 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-8 .elementor-control-col_width_9,#elementor-panel.brs-column-count-8 .elementor-control-col_width_9_tablet,#elementor-panel.brs-column-count-8 .elementor-control-col_width_9_mobile{display:none!important}
-#elementor-panel.brs-column-count-8 .elementor-control-col_width_10,#elementor-panel.brs-column-count-8 .elementor-control-col_width_10_tablet,#elementor-panel.brs-column-count-8 .elementor-control-col_width_10_mobile{display:none!important}
-#elementor-panel.brs-column-count-8 .elementor-control-col_width_11,#elementor-panel.brs-column-count-8 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-8 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-8 .elementor-control-col_width_12,#elementor-panel.brs-column-count-8 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-8 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-9 .elementor-control-col_width_10,#elementor-panel.brs-column-count-9 .elementor-control-col_width_10_tablet,#elementor-panel.brs-column-count-9 .elementor-control-col_width_10_mobile{display:none!important}
-#elementor-panel.brs-column-count-9 .elementor-control-col_width_11,#elementor-panel.brs-column-count-9 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-9 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-9 .elementor-control-col_width_12,#elementor-panel.brs-column-count-9 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-9 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-10 .elementor-control-col_width_11,#elementor-panel.brs-column-count-10 .elementor-control-col_width_11_tablet,#elementor-panel.brs-column-count-10 .elementor-control-col_width_11_mobile{display:none!important}
-#elementor-panel.brs-column-count-10 .elementor-control-col_width_12,#elementor-panel.brs-column-count-10 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-10 .elementor-control-col_width_12_mobile{display:none!important}
-#elementor-panel.brs-column-count-11 .elementor-control-col_width_12,#elementor-panel.brs-column-count-11 .elementor-control-col_width_12_tablet,#elementor-panel.brs-column-count-11 .elementor-control-col_width_12_mobile{display:none!important}
-/* 1.0.1: Make the custom control legible in Elementor's dark/light editor UI.
-   Scope everything to the editor control to avoid affecting front-end tables. */
-#elementor-panel .brs-structure-editor {
-    color: var(--e-a-color-txt, #d5d8dc);
-}
-#elementor-panel .brs-structure-editor .brs-editor-section {
-    border-color: var(--e-a-border-color, #555963);
-    background: var(--e-a-bg-default, #24262d);
-}
-#elementor-panel .brs-structure-editor .brs-editor-section > summary {
-    display: block;
-    background: var(--e-a-bg-hover, #393c44);
-    color: var(--e-a-color-txt, #e6e8eb);
-    border: 0;
-}
-#elementor-panel .brs-structure-editor .brs-editor-fields,
-#elementor-panel .brs-structure-editor .brs-editor-fields label {
-    color: var(--e-a-color-txt, #e6e8eb);
-}
-#elementor-panel .brs-structure-editor input[type="text"] {
-    color: var(--e-a-color-txt, #e6e8eb);
-    background: var(--e-a-bg-default, #24262d);
-    border: 1px solid var(--e-a-border-color, #555963);
-    padding: 6px 8px;
-    border-radius: 3px;
-    box-sizing: border-box;
-}
-#elementor-panel .brs-structure-editor button[type="button"] {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    min-height: 30px;
-    width: auto;
-    padding: 5px 8px;
-    color: var(--e-a-color-txt, #e6e8eb);
-    background: var(--e-a-bg-hover, #393c44);
-    border: 1px solid var(--e-a-border-color, #555963);
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1.2;
-    white-space: nowrap;
-    box-shadow: none;
-    text-indent: 0;
-}
-#elementor-panel .brs-structure-editor button[type="button"]:hover {
-    color: var(--e-a-color-primary, #fff);
-    border-color: var(--e-a-color-primary, #8796e8);
-}
-#elementor-panel .brs-structure-editor .brs-editor-field > button[type="button"] {
-    min-width: 32px;
-    padding-inline: 6px;
-}
-#elementor-panel .brs-structure-editor .brs-editor-fields > button[type="button"],
-#elementor-panel .brs-structure-editor > button[type="button"] {
-    width: 100%;
-    margin-top: 4px;
-}
-#elementor-panel .brs-structure-editor .brs-editor-actions {
-    flex-wrap: wrap;
-}
+/* Visibility is editor-only; never alters saved table cells. */
+/* The rule targets the repeater fields, not the header or style fields. */
+#elementor-panel.brs-table-columns-1 .elementor-control-body_rows .elementor-control-cell_2 { display: none !important; }
+#elementor-panel.brs-table-columns-1 .elementor-control-body_rows .elementor-control-cell_3 { display: none !important; }
+#elementor-panel.brs-table-columns-1 .elementor-control-body_rows .elementor-control-cell_4 { display: none !important; }
+#elementor-panel.brs-table-columns-1 .elementor-control-body_rows .elementor-control-cell_5 { display: none !important; }
+#elementor-panel.brs-table-columns-1 .elementor-control-body_rows .elementor-control-cell_6 { display: none !important; }
+#elementor-panel.brs-table-columns-2 .elementor-control-body_rows .elementor-control-cell_3 { display: none !important; }
+#elementor-panel.brs-table-columns-2 .elementor-control-body_rows .elementor-control-cell_4 { display: none !important; }
+#elementor-panel.brs-table-columns-2 .elementor-control-body_rows .elementor-control-cell_5 { display: none !important; }
+#elementor-panel.brs-table-columns-2 .elementor-control-body_rows .elementor-control-cell_6 { display: none !important; }
+#elementor-panel.brs-table-columns-3 .elementor-control-body_rows .elementor-control-cell_4 { display: none !important; }
+#elementor-panel.brs-table-columns-3 .elementor-control-body_rows .elementor-control-cell_5 { display: none !important; }
+#elementor-panel.brs-table-columns-3 .elementor-control-body_rows .elementor-control-cell_6 { display: none !important; }
+#elementor-panel.brs-table-columns-4 .elementor-control-body_rows .elementor-control-cell_5 { display: none !important; }
+#elementor-panel.brs-table-columns-4 .elementor-control-body_rows .elementor-control-cell_6 { display: none !important; }
+#elementor-panel.brs-table-columns-5 .elementor-control-body_rows .elementor-control-cell_6 { display: none !important; }

@@ -1,29 +1,20 @@
 # Changelog
 
-All notable changes to BRS Elementor Tables are recorded here. The first public version is **1.0.0**; development builds were not publicly released.
-
-## 1.0.1 - 2026-10-19 - Elementor Editor Appearance Fix
-
-### Fixed
-
-- Corrected unreadable accordion headings, icon buttons, and Add Row / Add Column buttons in Elementor dark mode.
-- Improved field and action-button contrast, dimensions, and wrapping in the narrow editor sidebar.
-- Editor-only changes; existing table settings and front-end rendering are unchanged.
-
 ## 1.0.0 - 2026-10-19 - Initial Release
 
-### Added
+### Elementor table widget
 
-- Elementor **BRS Table** widget using a custom accordion-based table structure editor.
-- Header Row editing with add, delete, and move-column controls; changes synchronize body cells automatically.
-- Collapsible body rows with add, move up/down, duplicate, and delete controls.
-- Two-column and two-row starting table; generic **Column 1 / Column 2**, **Row 1 / Row 2**, and **Item 1 / Item 2** field defaults.
-- Automatic per-row field counts matching the defined header columns (up to 12 columns and 250 rows).
-- Optional caption and semantic first-column row headers.
-- Responsive percentage column widths for Elementor desktop, tablet, and mobile controls.
-- Tablet and mobile display choices: horizontally scrollable table or stacked, full-width labeled cells.
-- Responsive cell padding and text alignment; table header/body typography and color settings; alternate row backgrounds and borders.
-- Semantic HTML table output with column headers, optional caption, and keyboard-focusable scroll container.
-- Big Red SEO shared WordPress admin changelog viewer, GitHub plugin-information details, and public GitHub release updater.
-- GitHub Actions release workflow building a versioned ZIP and publishing a matching GitHub release.
-- Project documentation and initial public release packaging.
+- Native Elementor **Table Setup**, **Header Row**, and collapsible **Table Rows** sections, based on the approved 1.7.0 interface.
+- Select 1–6 columns, with header fields and body-row input visibility following the selected column count.
+- Generic column headings and two initial, editable, collapsible body rows; add, duplicate, reorder, and remove rows with Elementor repeater controls.
+- Optional visible caption and first-column row headings for semantic HTML output.
+- Small-screen horizontal-scroll or wrap-content presentation.
+- Percentage-based column widths (auto-sized when unset or invalid), header/body typography, colors, borders, alignment, and responsive cell padding.
+
+### Plugin infrastructure
+
+- Standard BRS GitHub release updater, plugin details support, and local admin changelog viewer.
+- GitHub Actions workflow to build and publish versioned release assets.
+- `README.md`, `CHANGELOG.md`, and Composer development configuration.
+
+This initial release restores the 1.7.0 widget implementation rather than the experimental 1.8.0 custom table editor.
