@@ -1,0 +1,243 @@
+name: Release BRS Elementor Tables
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: brs-elementor-tables-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build and publish plugin release
+    runs-on: ubuntu-latest
+
+    env:
+      PLUGIN_SLUG: brs-elementor-tables
+      MAIN_PLUGIN_FILE: brs-elementor-tables.php
+      VERSION_CONSTANT: BRS_ELEMENTOR_TABLES_VERSION
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Read and validate plugin version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ ! -f "$MAIN_PLUGIN_FILE" ]]; then
+            echo "::error::Main plugin file not found: $MAIN_PLUGIN_FILE"
+            exit 1
+          fi
+
+          HEADER_VERSION="$(
+            sed -nE 's/^[[:space:]]*\*[[:space:]]*Version:[[:space:]]*([^[:space:]]+).*$/\1/p' \
+              "$MAIN_PLUGIN_FILE" |
+              head -n 1
+          )"
+
+          CONSTANT_VERSION="$(
+            sed -nE "s/^[[:space:]]*define\([[:space:]]*'$VERSION_CONSTANT',[[:space:]]*'([^']+)'.*$/\1/p" \
+              "$MAIN_PLUGIN_FILE" |
+              head -n 1
+          )"
+
+          if [[ -z "$HEADER_VERSION" ]]; then
+            echo "::error::Could not read the Version header from $MAIN_PLUGIN_FILE"
+            exit 1
+          fi
+
+          if [[ -z "$CONSTANT_VERSION" ]]; then
+            echo "::error::Could not read $VERSION_CONSTANT from $MAIN_PLUGIN_FILE"
+            exit 1
+          fi
+
+          if [[ "$HEADER_VERSION" != "$CONSTANT_VERSION" ]]; then
+            echo "::error::Plugin header version ($HEADER_VERSION) does not match $VERSION_CONSTANT ($CONSTANT_VERSION)"
+            exit 1
+          fi
+
+          if [[ ! "$HEADER_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Plugin version must use the format 0.50.0. Found: $HEADER_VERSION"
+            exit 1
+          fi
+
+          echo "VERSION=$HEADER_VERSION" >> "$GITHUB_ENV"
+          echo "Detected plugin version: $HEADER_VERSION"
+
+      - name: Verify tag does not exist
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null 2>&1; then
+            echo "::error::Tag v$VERSION already exists"
+            exit 1
+          fi
+
+      - name: Build production plugin folder
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BUILD_ROOT="$RUNNER_TEMP/brs-elementor-tables-build"
+          BUILD_DIR="$BUILD_ROOT/$PLUGIN_SLUG"
+
+          rm -rf "$BUILD_ROOT"
+          mkdir -p "$BUILD_DIR"
+
+          rsync -a ./ "$BUILD_DIR/" \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.vscode/' \
+            --exclude='stubs/' \
+            --exclude='tests/' \
+            --exclude='docs/' \
+            --exclude='vendor/' \
+            --exclude='node_modules/' \
+            --exclude='.gitattributes' \
+            --exclude='.gitignore' \
+            --exclude='.editorconfig' \
+            --exclude='.distignore' \
+            --exclude='composer.json' \
+            --exclude='composer.lock' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='yarn.lock' \
+            --exclude='phpcs.xml' \
+            --exclude='phpcs.xml.dist' \
+            --exclude='phpunit.xml' \
+            --exclude='phpunit.xml.dist' \
+            --exclude='TECHNICAL-CHANGELOG.md' \
+            --exclude='*.log' \
+            --exclude='*.zip'
+
+          if [[ ! -f "$BUILD_DIR/$MAIN_PLUGIN_FILE" ]]; then
+            echo "::error::The packaged plugin is missing $PLUGIN_SLUG/$MAIN_PLUGIN_FILE"
+            exit 1
+          fi
+
+          if [[ ! -f "$BUILD_DIR/CHANGELOG.md" ]]; then
+            echo "::error::The packaged plugin is missing CHANGELOG.md"
+            exit 1
+          fi
+
+      - name: Create versioned ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BUILD_ROOT="$RUNNER_TEMP/brs-elementor-tables-build"
+          ASSET_NAME="$PLUGIN_SLUG-$VERSION.zip"
+
+          cd "$BUILD_ROOT"
+          zip -rq "$GITHUB_WORKSPACE/$ASSET_NAME" "$PLUGIN_SLUG"
+
+          echo "ASSET_NAME=$ASSET_NAME" >> "$GITHUB_ENV"
+
+      - name: Verify ZIP structure
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          unzip -t "$ASSET_NAME"
+
+          if ! unzip -Z1 "$ASSET_NAME" | grep -qx "$PLUGIN_SLUG/$MAIN_PLUGIN_FILE"; then
+            echo "::error::ZIP does not contain $PLUGIN_SLUG/$MAIN_PLUGIN_FILE"
+            exit 1
+          fi
+
+          if ! unzip -Z1 "$ASSET_NAME" | grep -qx "$PLUGIN_SLUG/CHANGELOG.md"; then
+            echo "::error::ZIP does not contain $PLUGIN_SLUG/CHANGELOG.md"
+            exit 1
+          fi
+
+          if unzip -Z1 "$ASSET_NAME" | grep -qx "$PLUGIN_SLUG/TECHNICAL-CHANGELOG.md"; then
+            echo "::error::ZIP unexpectedly contains TECHNICAL-CHANGELOG.md"
+            exit 1
+          fi
+
+          echo "Release asset: $ASSET_NAME"
+          unzip -l "$ASSET_NAME"
+
+      - name: Build release notes from changelog
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          RELEASE_NOTES="$RUNNER_TEMP/release-notes.md"
+
+          if [[ ! -s CHANGELOG.md ]]; then
+            echo "::error::CHANGELOG.md is missing or empty"
+            exit 1
+          fi
+
+          SERIES="${VERSION%.*}"
+
+          awk -v series="$SERIES" '
+            function heading_version(line, token, cleaned, parts) {
+              if (line !~ /^##[[:space:]]+\[?[0-9]+\.[0-9]+\.[0-9]+\]?([[:space:]]+-|[[:space:]]*$)/) {
+                return ""
+              }
+              token = $2
+              gsub(/^\[/, "", token)
+              gsub(/\]$/, "", token)
+              return token
+            }
+            {
+              version = heading_version($0)
+              if (version != "") {
+                split(version, parts, ".")
+                heading_series = parts[1] "." parts[2]
+
+                if (heading_series == series) {
+                  started = 1
+                  print
+                  next
+                }
+
+                if (started) {
+                  exit
+                }
+              }
+
+              if (started) {
+                print
+              }
+            }
+          ' CHANGELOG.md > "$RELEASE_NOTES"
+
+          if [[ ! -s "$RELEASE_NOTES" ]]; then
+            echo "::error::No CHANGELOG.md entries found for release series $SERIES.x"
+            echo "::error::Expected headings such as: ## $VERSION - YYYY-MM-DD - Release Title"
+            exit 1
+          fi
+
+          if ! grep -Eq "^##[[:space:]]+\[?$VERSION\]?([[:space:]]+-|[[:space:]]*$)" "$RELEASE_NOTES"; then
+            echo "::error::CHANGELOG.md does not contain an entry for the current plugin version $VERSION"
+            exit 1
+          fi
+
+          echo "Release notes include CHANGELOG.md series: $SERIES.x"
+          cat "$RELEASE_NOTES"
+          echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
+
+      - name: Create tag and GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          gh release create "v$VERSION" "$ASSET_NAME" \
+            --target "$GITHUB_SHA" \
+            --title "BRS Elementor Tables $VERSION" \
+            --notes-file "$RELEASE_NOTES" \
+            --latest
