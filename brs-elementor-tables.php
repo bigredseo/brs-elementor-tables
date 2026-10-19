@@ -3,7 +3,7 @@
  * Plugin Name: BRS Elementor Tables
  * Plugin URI: https://github.com/bigredseo/brs-elementor-tables
  * Description: Visual Table Editor for Elementor
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Big Red SEO
  * Author URI: https://www.bigredseo.com/
  * Text Domain: brs-elementor-tables
@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'BRS_ELEMENTOR_TABLES_VERSION', '1.0.0' );
+define( 'BRS_ELEMENTOR_TABLES_VERSION', '1.0.1' );
 define( 'BRS_ELEMENTOR_TABLES_FILE', __FILE__ );
 define( 'BRS_ELEMENTOR_TABLES_PATH', plugin_dir_path( __FILE__ ) );
 

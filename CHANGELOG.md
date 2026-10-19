@@ -2,6 +2,14 @@
 
 All notable changes to BRS Elementor Tables are recorded here. The first public version is **1.0.0**; development builds were not publicly released.
 
+## 1.0.1 - 2026-10-19 - Elementor Editor Appearance Fix
+
+### Fixed
+
+- Corrected unreadable accordion headings, icon buttons, and Add Row / Add Column buttons in Elementor dark mode.
+- Improved field and action-button contrast, dimensions, and wrapping in the narrow editor sidebar.
+- Editor-only changes; existing table settings and front-end rendering are unchanged.
+
 ## 1.0.0 - 2026-10-19 - Initial Release
 
 ### Added
