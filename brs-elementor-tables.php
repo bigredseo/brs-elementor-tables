@@ -29,4 +29,23 @@ define( 'BRS_ELEMENTOR_TABLES_PATH', plugin_dir_path( __FILE__ ) );
 require_once BRS_ELEMENTOR_TABLES_PATH . 'includes/class-brs-plugin-helpers.php';
 BRS_Plugin_Helpers::boot( __FILE__ );
 
-// Plugin code starts here.
+// Register Elementor controls, widget, and editor assets.
+add_action( 'elementor/controls/register', function ( $manager ) {
+    require_once BRS_ELEMENTOR_TABLES_PATH . 'includes/controls/class-brs-table-control.php';
+    $manager->register( new BRS_Elementor_Table_Control() );
+} );
+
+add_action( 'elementor/widgets/register', function ( $widgets_manager ) {
+    require_once BRS_ELEMENTOR_TABLES_PATH . 'includes/widgets/class-brs-table-widget.php';
+    $widgets_manager->register( new BRS_Elementor_Table_Widget() );
+} );
+
+add_action( 'init', function () {
+    wp_register_style( 'brs-elementor-tables', plugins_url( 'assets/table.css', __FILE__ ), [], BRS_ELEMENTOR_TABLES_VERSION );
+} );
+
+add_action( 'elementor/editor/after_enqueue_scripts', function () {
+    wp_enqueue_script( 'brs-elementor-tables-editor', plugins_url( 'assets/editor.js', __FILE__ ), [ 'jquery', 'elementor-editor' ], BRS_ELEMENTOR_TABLES_VERSION, true );
+    wp_enqueue_style( 'brs-elementor-tables-editor', plugins_url( 'assets/editor.css', __FILE__ ), [], BRS_ELEMENTOR_TABLES_VERSION );
+} );
+

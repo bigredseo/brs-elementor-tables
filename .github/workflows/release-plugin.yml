@@ -65,7 +65,7 @@ jobs:
           fi
 
           if [[ ! "$HEADER_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::error::Plugin version must use the format 0.50.0. Found: $HEADER_VERSION"
+            echo "::error::Plugin version must use the format 1.0.0. Found: $HEADER_VERSION"
             exit 1
           fi
 
